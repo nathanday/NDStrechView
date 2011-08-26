@@ -1,0 +1,291 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D8888BF11407ABD200DDDFC4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8888BF01407ABD200DDDFC4 /* UIKit.framework */; };
+		D8888BF31407ABD200DDDFC4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8888BF21407ABD200DDDFC4 /* Foundation.framework */; };
+		D8888BF51407ABD200DDDFC4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8888BF41407ABD200DDDFC4 /* CoreGraphics.framework */; };
+		D8888BFB1407ABD200DDDFC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8888BF91407ABD200DDDFC4 /* InfoPlist.strings */; };
+		D8888BFD1407ABD200DDDFC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D8888BFC1407ABD200DDDFC4 /* main.m */; };
+		D8888C011407ABD200DDDFC4 /* NDStrechViewAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D8888C001407ABD200DDDFC4 /* NDStrechViewAppDelegate.m */; };
+		D8888C041407ABD300DDDFC4 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8888C021407ABD300DDDFC4 /* MainWindow.xib */; };
+		D8888C071407ABD300DDDFC4 /* NDStrechViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8888C061407ABD300DDDFC4 /* NDStrechViewViewController.m */; };
+		D8888C0A1407ABD300DDDFC4 /* NDStrechViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8888C081407ABD300DDDFC4 /* NDStrechViewViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D8888BEC1407ABD200DDDFC4 /* NDStrechView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NDStrechView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8888BF01407ABD200DDDFC4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D8888BF21407ABD200DDDFC4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D8888BF41407ABD200DDDFC4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D8888BF81407ABD200DDDFC4 /* NDStrechView-Info.plist */ = {isa = PBXFileReference; path = "NDStrechView-Info.plist"; sourceTree = "<group>"; };
+		D8888BFA1407ABD200DDDFC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D8888BFC1407ABD200DDDFC4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D8888BFE1407ABD200DDDFC4 /* NDStrechView-Prefix.pch */ = {isa = PBXFileReference; path = "NDStrechView-Prefix.pch"; sourceTree = "<group>"; };
+		D8888BFF1407ABD200DDDFC4 /* NDStrechViewAppDelegate.h */ = {isa = PBXFileReference; path = NDStrechViewAppDelegate.h; sourceTree = "<group>"; };
+		D8888C001407ABD200DDDFC4 /* NDStrechViewAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NDStrechViewAppDelegate.m; sourceTree = "<group>"; };
+		D8888C031407ABD300DDDFC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		D8888C051407ABD300DDDFC4 /* NDStrechViewViewController.h */ = {isa = PBXFileReference; path = NDStrechViewViewController.h; sourceTree = "<group>"; };
+		D8888C061407ABD300DDDFC4 /* NDStrechViewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NDStrechViewViewController.m; sourceTree = "<group>"; };
+		D8888C091407ABD300DDDFC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NDStrechViewViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D8888BE91407ABD200DDDFC4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8888BF11407ABD200DDDFC4 /* UIKit.framework in Frameworks */,
+				D8888BF31407ABD200DDDFC4 /* Foundation.framework in Frameworks */,
+				D8888BF51407ABD200DDDFC4 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D8888BE11407ABD200DDDFC4 = {
+			isa = PBXGroup;
+			children = (
+				D8888BF61407ABD200DDDFC4 /* NDStrechView */,
+				D8888BEF1407ABD200DDDFC4 /* Frameworks */,
+				D8888BED1407ABD200DDDFC4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D8888BED1407ABD200DDDFC4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D8888BEC1407ABD200DDDFC4 /* NDStrechView.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D8888BEF1407ABD200DDDFC4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8888BF01407ABD200DDDFC4 /* UIKit.framework */,
+				D8888BF21407ABD200DDDFC4 /* Foundation.framework */,
+				D8888BF41407ABD200DDDFC4 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D8888BF61407ABD200DDDFC4 /* NDStrechView */ = {
+			isa = PBXGroup;
+			children = (
+				D8888BFF1407ABD200DDDFC4 /* NDStrechViewAppDelegate.h */,
+				D8888C001407ABD200DDDFC4 /* NDStrechViewAppDelegate.m */,
+				D8888C021407ABD300DDDFC4 /* MainWindow.xib */,
+				D8888C051407ABD300DDDFC4 /* NDStrechViewViewController.h */,
+				D8888C061407ABD300DDDFC4 /* NDStrechViewViewController.m */,
+				D8888C081407ABD300DDDFC4 /* NDStrechViewViewController.xib */,
+				D8888BF71407ABD200DDDFC4 /* Supporting Files */,
+			);
+			path = NDStrechView;
+			sourceTree = "<group>";
+		};
+		D8888BF71407ABD200DDDFC4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D8888BF81407ABD200DDDFC4 /* NDStrechView-Info.plist */,
+				D8888BF91407ABD200DDDFC4 /* InfoPlist.strings */,
+				D8888BFC1407ABD200DDDFC4 /* main.m */,
+				D8888BFE1407ABD200DDDFC4 /* NDStrechView-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D8888BEB1407ABD200DDDFC4 /* NDStrechView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D8888C0D1407ABD300DDDFC4 /* Build configuration list for PBXNativeTarget "NDStrechView" */;
+			buildPhases = (
+				D8888BE81407ABD200DDDFC4 /* Sources */,
+				D8888BE91407ABD200DDDFC4 /* Frameworks */,
+				D8888BEA1407ABD200DDDFC4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NDStrechView;
+			productName = NDStrechView;
+			productReference = D8888BEC1407ABD200DDDFC4 /* NDStrechView.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D8888BE31407ABD200DDDFC4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Nathan Day";
+			};
+			buildConfigurationList = D8888BE61407ABD200DDDFC4 /* Build configuration list for PBXProject "NDStrechView" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D8888BE11407ABD200DDDFC4;
+			productRefGroup = D8888BED1407ABD200DDDFC4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D8888BEB1407ABD200DDDFC4 /* NDStrechView */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D8888BEA1407ABD200DDDFC4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8888BFB1407ABD200DDDFC4 /* InfoPlist.strings in Resources */,
+				D8888C041407ABD300DDDFC4 /* MainWindow.xib in Resources */,
+				D8888C0A1407ABD300DDDFC4 /* NDStrechViewViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D8888BE81407ABD200DDDFC4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8888BFD1407ABD200DDDFC4 /* main.m in Sources */,
+				D8888C011407ABD200DDDFC4 /* NDStrechViewAppDelegate.m in Sources */,
+				D8888C071407ABD300DDDFC4 /* NDStrechViewViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D8888BF91407ABD200DDDFC4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D8888BFA1407ABD200DDDFC4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D8888C021407ABD300DDDFC4 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D8888C031407ABD300DDDFC4 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		D8888C081407ABD300DDDFC4 /* NDStrechViewViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D8888C091407ABD300DDDFC4 /* en */,
+			);
+			name = NDStrechViewViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D8888C0B1407ABD300DDDFC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D8888C0C1407ABD300DDDFC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D8888C0E1407ABD300DDDFC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NDStrechView/NDStrechView-Prefix.pch";
+				INFOPLIST_FILE = "NDStrechView/NDStrechView-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D8888C0F1407ABD300DDDFC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NDStrechView/NDStrechView-Prefix.pch";
+				INFOPLIST_FILE = "NDStrechView/NDStrechView-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D8888BE61407ABD200DDDFC4 /* Build configuration list for PBXProject "NDStrechView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D8888C0B1407ABD300DDDFC4 /* Debug */,
+				D8888C0C1407ABD300DDDFC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D8888C0D1407ABD300DDDFC4 /* Build configuration list for PBXNativeTarget "NDStrechView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D8888C0E1407ABD300DDDFC4 /* Debug */,
+				D8888C0F1407ABD300DDDFC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D8888BE31407ABD200DDDFC4 /* Project object */;
+}
