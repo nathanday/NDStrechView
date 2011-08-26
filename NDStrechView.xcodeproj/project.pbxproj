@@ -16,6 +16,7 @@
 		D8888C041407ABD300DDDFC4 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8888C021407ABD300DDDFC4 /* MainWindow.xib */; };
 		D8888C071407ABD300DDDFC4 /* NDStrechViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8888C061407ABD300DDDFC4 /* NDStrechViewViewController.m */; };
 		D8888C0A1407ABD300DDDFC4 /* NDStrechViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8888C081407ABD300DDDFC4 /* NDStrechViewViewController.xib */; };
+		D8888C131407AD3D00DDDFC4 /* NDStrechView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8888C121407AD3D00DDDFC4 /* NDStrechView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,16 +24,18 @@
 		D8888BF01407ABD200DDDFC4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D8888BF21407ABD200DDDFC4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D8888BF41407ABD200DDDFC4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		D8888BF81407ABD200DDDFC4 /* NDStrechView-Info.plist */ = {isa = PBXFileReference; path = "NDStrechView-Info.plist"; sourceTree = "<group>"; };
+		D8888BF81407ABD200DDDFC4 /* NDStrechView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NDStrechView-Info.plist"; sourceTree = "<group>"; };
 		D8888BFA1407ABD200DDDFC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D8888BFC1407ABD200DDDFC4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D8888BFE1407ABD200DDDFC4 /* NDStrechView-Prefix.pch */ = {isa = PBXFileReference; path = "NDStrechView-Prefix.pch"; sourceTree = "<group>"; };
-		D8888BFF1407ABD200DDDFC4 /* NDStrechViewAppDelegate.h */ = {isa = PBXFileReference; path = NDStrechViewAppDelegate.h; sourceTree = "<group>"; };
+		D8888BFE1407ABD200DDDFC4 /* NDStrechView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NDStrechView-Prefix.pch"; sourceTree = "<group>"; };
+		D8888BFF1407ABD200DDDFC4 /* NDStrechViewAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NDStrechViewAppDelegate.h; sourceTree = "<group>"; };
 		D8888C001407ABD200DDDFC4 /* NDStrechViewAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NDStrechViewAppDelegate.m; sourceTree = "<group>"; };
 		D8888C031407ABD300DDDFC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		D8888C051407ABD300DDDFC4 /* NDStrechViewViewController.h */ = {isa = PBXFileReference; path = NDStrechViewViewController.h; sourceTree = "<group>"; };
+		D8888C051407ABD300DDDFC4 /* NDStrechViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NDStrechViewViewController.h; sourceTree = "<group>"; };
 		D8888C061407ABD300DDDFC4 /* NDStrechViewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NDStrechViewViewController.m; sourceTree = "<group>"; };
 		D8888C091407ABD300DDDFC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NDStrechViewViewController.xib; sourceTree = "<group>"; };
+		D8888C111407AD3D00DDDFC4 /* NDStrechView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDStrechView.h; sourceTree = "<group>"; };
+		D8888C121407AD3D00DDDFC4 /* NDStrechView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDStrechView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +82,7 @@
 		D8888BF61407ABD200DDDFC4 /* NDStrechView */ = {
 			isa = PBXGroup;
 			children = (
+				D8888C101407AD1300DDDFC4 /* Classes */,
 				D8888BFF1407ABD200DDDFC4 /* NDStrechViewAppDelegate.h */,
 				D8888C001407ABD200DDDFC4 /* NDStrechViewAppDelegate.m */,
 				D8888C021407ABD300DDDFC4 /* MainWindow.xib */,
@@ -99,6 +103,16 @@
 				D8888BFE1407ABD200DDDFC4 /* NDStrechView-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D8888C101407AD1300DDDFC4 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				D8888C111407AD3D00DDDFC4 /* NDStrechView.h */,
+				D8888C121407AD3D00DDDFC4 /* NDStrechView.m */,
+			);
+			name = Classes;
+			path = ../Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,6 +181,7 @@
 				D8888BFD1407ABD200DDDFC4 /* main.m in Sources */,
 				D8888C011407ABD200DDDFC4 /* NDStrechViewAppDelegate.m in Sources */,
 				D8888C071407ABD300DDDFC4 /* NDStrechViewViewController.m in Sources */,
+				D8888C131407AD3D00DDDFC4 /* NDStrechView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

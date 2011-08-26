@@ -30,6 +30,12 @@
 
 - (void)viewDidUnload
 {
+    [titleLabel release];
+    titleLabel = nil;
+    [label1 release];
+    label1 = nil;
+    [footerLable release];
+    footerLable = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -41,4 +47,10 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)dealloc {
+    [titleLabel release];
+    [label1 release];
+    [footerLable release];
+    [super dealloc];
+}
 @end
