@@ -18,6 +18,7 @@ static inline CGFloat CGDiff( CGFloat a, CGFloat b ) { return a > b ? (a -  b) :
 - (NSUInteger)indexForSubview:(UIView *)veiw;
 - (CGFloat)heightAfterUpdateViewPosition;
 - (UIView *)previousVisibleViewForViewAt:(NSUInteger)index;
+- (void)resizeFrameAndSuperViewForBoundsHeight:(CGFloat)height;
 
 @property(readonly)				NSMutableData	* marginsForViewsData;
 @property(readonly)				CGFloat			* marginsForViews;
@@ -66,6 +67,10 @@ static inline CGFloat CGDiff( CGFloat a, CGFloat b ) { return a > b ? (a -  b) :
 
 - (void)setAllViewsHidden:(BOOL)aFlag
 {
+	for( UIView * theView in self.subviews )
+		theView.hidden = aFlag;
+
+	[self resizeFrameAndSuperViewForBoundsHeight:[self heightAfterUpdateViewPosition]];
 }
 
 - (BOOL)isAllViewsHidden
@@ -78,10 +83,7 @@ static inline CGFloat CGDiff( CGFloat a, CGFloat b ) { return a > b ? (a -  b) :
 	return true;
 }
 
-- (void)setAllViewsVisible:(BOOL)aFlag
-{
-	
-}
+- (void)setAllViewsVisible:(BOOL)aFlag { [self setAllViewsHidden:!aFlag]; }
 
 - (BOOL)isAllViewsVisible
 {
@@ -109,26 +111,37 @@ static inline CGFloat CGDiff( CGFloat a, CGFloat b ) { return a > b ? (a -  b) :
 
 - (void)setHidden:(BOOL)aFlag view:(UIView *)aView
 {
-	NSParameterAssert( aView.superview == self );
-	CGRect			theBounds = self.bounds;
-	CGRect			theFrame = self.frame;
-
 	aView.hidden = aFlag;
-	theBounds.size.height = [self heightAfterUpdateViewPosition];
-	theFrame.size = [self convertRect:theBounds toView:self.superview].size;
-	self.frame = theFrame;
+	[self resizeFrameAndSuperViewForBoundsHeight:[self heightAfterUpdateViewPosition]];
 }
 
 - (BOOL)isViewHidden:(UIView *)aView { return aView.superview == self && aView.hidden; }
 
-- (void)setHidden:(BOOL)aFlag views:(UIView *)firstView, ...
+- (void)setHidden:(BOOL)aFlag views:(UIView *)aFirstView, ...
 {
-	
+    va_list			theVAList;
+	UIView			* theView = nil;
+    va_start(theVAList, aFirstView);
+
+	while( (theView = va_arg(theVAList, UIView*)) != nil )
+	{
+		NSParameterAssert( theView.superview == self );
+		theView.hidden = aFlag;
+	}
+
+	[self resizeFrameAndSuperViewForBoundsHeight:[self heightAfterUpdateViewPosition]];
+    va_end(theVAList);
 }
 
 - (void)setHidden:(BOOL)aFlag viewSet:(NSSet *)aSet
 {
-	
+	for( UIView * theView in aSet )
+	{
+		NSParameterAssert( theView.superview == self );
+		theView.hidden = aFlag;
+	}
+
+	[self resizeFrameAndSuperViewForBoundsHeight:[self heightAfterUpdateViewPosition]];
 }
 
 - (void)enumerateObjectsUsingBlock:(BOOL (^)(UIView * aView, NSUInteger index, BOOL *stop))setViewHidden
@@ -140,9 +153,9 @@ static inline CGFloat CGDiff( CGFloat a, CGFloat b ) { return a > b ? (a -  b) :
 
 		BOOL		theHide = setViewHidden( theView, i, &theStop);
 		if( !theStop && theView.isHidden != theHide )
-			[self setHidden:theHide view:theView];
-
+			theView.hidden = theHide;
 	}
+	[self resizeFrameAndSuperViewForBoundsHeight:[self heightAfterUpdateViewPosition]];
 }
 
 #pragma mark - UIView methods
@@ -259,9 +272,10 @@ static inline CGFloat CGDiff( CGFloat a, CGFloat b ) { return a > b ? (a -  b) :
 		UIViewAutoresizing		theViewAutoresizing = (theView.autoresizingMask&(UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleRightMargin));
 		if( !theView.isHidden )
 		{
-			CGFloat		theTopMarginForView = self.marginsForViews[anIndex];
 			CGRect		theFrame = theView.frame;
-			theFrame.origin.y = thePreviousBottom + theTopMarginForView;
+				CGFloat		theTopMarginForView = self.marginsForViews[anIndex];
+				theFrame.origin.y = thePreviousBottom + theTopMarginForView;
+
 			theView.frame = theFrame;
 			thePreviousBottom = CGRectGetMaxY(theFrame);
 			theLastIndex = anIndex;
@@ -269,7 +283,7 @@ static inline CGFloat CGDiff( CGFloat a, CGFloat b ) { return a > b ? (a -  b) :
 		
 		theView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin|theViewAutoresizing;
 	}];
-	return thePreviousBottom + self.marginsForViews[theLastIndex+1];
+	return thePreviousBottom + self.marginsForViews[theLastIndex];
 }
 
 - (UIView *)previousVisibleViewForViewAt:(NSUInteger)anIndex
@@ -284,5 +298,30 @@ static inline CGFloat CGDiff( CGFloat a, CGFloat b ) { return a > b ? (a -  b) :
 	}
 	return theResult;
 }
+
+- (void)resizeFrameAndSuperViewForBoundsHeight:(CGFloat)aHeight
+{
+	
+	CGRect			theBounds = self.bounds;
+	UIView			* theSuperView = self.superview;
+
+	CGFloat			theDiff = [self convertRect:theBounds toView:theSuperView].size.height - aHeight;
+	UIView			* theView = self;
+
+	while( theView != nil && (theView.autoresizingMask & (UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin)) == 0 )
+		theView = theView.superview;
+
+	CGRect	theFrame = theView.frame;
+	theFrame.size.height -= theDiff;
+	if( (theView.autoresizingMask & UIViewAutoresizingFlexibleTopMargin) != 0 )
+	{
+		if( (theView.autoresizingMask & UIViewAutoresizingFlexibleBottomMargin) != 0 )
+			theFrame.origin.y += theDiff/2.0;
+		else
+			theFrame.origin.y += theDiff;
+	}
+	theView.frame = theFrame;
+}
+
 
 @end

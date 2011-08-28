@@ -11,14 +11,21 @@
 
 @interface NDStrechViewViewController ()
 {
-	CGRect		viewFrames[8];
+	CGRect			viewFrames[8];
+	BOOL			bulkChangeOn;
+	NSMutableSet	* hideSet,
+					* visibleSet;
 }
 
 - (BOOL)checkViewPositions;
 - (void)recordViewPositions;
 
-@property(readonly)		CGRect * viewFrames;
-@property(readonly)		NSUInteger viewFramesCount;
+- (void)clearBulkSets;
+
+@property(readonly)		CGRect			* viewFrames;
+@property(readonly)		NSUInteger		viewFramesCount;
+@property(readonly)		NSMutableSet	* hideSet;
+@property(readonly)		NSMutableSet	* visibleSet;
 
 @end
 
@@ -33,13 +40,39 @@
 				label5,
 				label6,
 				footerLabel,
-				toggleButtons;
+				toggleButtons,
+				bulkChangeOn;
 
 #pragma mark - manually implemented properties
 
 - (CGRect *)viewFrames { return viewFrames; }
 - (NSUInteger)viewFramesCount { return sizeof(viewFrames)/sizeof(*viewFrames); }
 
+- (NSMutableSet	*)hideSet
+{
+	if( hideSet == nil )
+		hideSet = [[NSMutableSet alloc] init];
+	return hideSet;
+}
+
+- (NSMutableSet	*)visibleSet
+{
+	if( visibleSet == nil )
+		visibleSet = [[NSMutableSet alloc] init];
+	return visibleSet;
+}
+
+- (void)setBulkChangeOn:(BOOL)aFlag
+{
+	if( aFlag == NO )
+	{
+		[self.scretchView setHidden:YES viewSet:self.hideSet];
+		[self.scretchView setHidden:NO viewSet:self.visibleSet];
+		[self clearBulkSets];
+	}
+
+	bulkChangeOn = aFlag;
+}
 
 #pragma mark - View lifecycle
 
@@ -50,17 +83,25 @@
     footerLabel = nil;
     toggleButtons = nil;
 	scretchView = nil;
+	[hideSet release], hideSet = nil;
+	[visibleSet release], visibleSet = nil;
+	[bulkToggleButton release];
+	bulkToggleButton = nil;
     [super viewDidUnload];
 }
 
 - (void)viewDidLoad
 {
-	[self recordViewPositions];
     [super viewDidLoad];
+	[self recordViewPositions];
 }
 
 - (void)dealloc
 {
+	[hideSet release];
+	[visibleSet release];
+
+	[bulkToggleButton release];
     [super dealloc];
 }
 
@@ -68,32 +109,58 @@
 {
 	switch( anIndex )
 	{
-		case 0: return self.titleLabel;
-		case 1: return self.label1;
-		case 2: return self.label2;
-		case 3: return self.label3;
-		case 4: return self.label4;
-		case 5: return self.label5;
-		case 6: return self.label6;
-		case 7: return self.footerLabel;
-		default:
-			NSAssert( NO, @"Bad tag %d",anIndex );
+	case 0: return self.titleLabel;
+	case 1: return self.label1;
+	case 2: return self.label2;
+	case 3: return self.label3;
+	case 4: return self.label4;
+	case 5: return self.label5;
+	case 6: return self.label6;
+	case 7: return self.footerLabel;
+	default:
+		NSAssert( NO, @"Bad tag %d",anIndex );
 	}
 	return nil;
 }
 
 
+- (IBAction)bulkChangeAction:(UISwitch *)aSender { self.bulkChangeOn = aSender.isOn; }
+
 - (IBAction)toggleHiddenAction:(UIButton *)aSender
 {
-	UILabel		* theView = [self labelForIndex: aSender.tag];
+	UILabel		* theView = [self labelForIndex:aSender.tag];
 	NSParameterAssert( theView != nil );
-	[self.scretchView setHidden:!theView.isHidden view:theView];
-	aSender.selected = theView.isHidden;
-	
-	if( self.scretchView.isAllViewsVisible )
+
+	if( self.isBulkChangeOn )
 	{
-//		NSParameterAssert([self checkViewPositions]);
+		if( theView.isHidden )
+			[self.visibleSet addObject:theView];
+		else
+			[self.hideSet addObject:theView];
+		aSender.selected = !theView.isHidden;
 	}
+	else
+	{
+		[self.scretchView setHidden:!theView.isHidden view:theView];
+		aSender.selected = theView.isHidden;
+		
+		if( self.scretchView.isAllViewsVisible )
+			NSParameterAssert([self checkViewPositions]);
+	}
+}
+
+- (IBAction)hideAllAction:(UIButton *)sender
+{
+	self.scretchView.allViewsHidden = YES;
+	for( UIButton * theButton in self.toggleButtons )
+		theButton.selected = YES;
+}
+
+- (IBAction)showAllAction:(UIButton *)sender
+{
+	self.scretchView.allViewsVisible = YES;
+	for( UIButton * theButton in self.toggleButtons )
+		theButton.selected = NO;
 }
 
 #pragma mark - Private Methods
@@ -119,6 +186,12 @@
 {
 	for( NSInteger i = 0, c = self.viewFramesCount; i < c; i++ )
 		viewFrames[i] = [self labelForIndex:i].frame;
+}
+
+- (void)clearBulkSets
+{
+	[hideSet release], hideSet = nil;
+	[visibleSet release], visibleSet = nil;
 }
 
 @end

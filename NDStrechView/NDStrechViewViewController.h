@@ -12,6 +12,7 @@
 
 @interface NDStrechViewViewController : UIViewController
 {
+@private
 	IBOutlet NDStrechView	* scretchView;
 	IBOutlet UILabel		* titleLabel;
 	IBOutlet UILabel		* label1;
@@ -23,7 +24,7 @@
 	IBOutlet UILabel		* footerLabel;
 
 	IBOutletCollection(UIButton) NSArray *toggleButtons;
-
+	IBOutlet UISwitch *bulkToggleButton;
 }
 
 @property(readonly)		NDStrechView	* scretchView;
@@ -35,8 +36,13 @@
 @property(readonly)		UILabel			* label5;
 @property(readonly)		UILabel			* label6;
 @property(readonly)		UILabel			* footerLabel;
-@property(readonly)		NSArray			* toggleButtons;
+@property(readonly)		NSArray			* toggleButtons; 
 
+@property(assign,nonatomic,getter=isBulkChangeOn)		BOOL	bulkChangeOn;
+
+- (IBAction)bulkChangeAction:(UISwitch *)sender;
 - (IBAction)toggleHiddenAction:(UIButton *)sender;
+- (IBAction)hideAllAction:(UIButton *)sender;
+- (IBAction)showAllAction:(UIButton *)sender;
 
 @end
