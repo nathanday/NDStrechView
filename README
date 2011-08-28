@@ -1,0 +1,1 @@
+UIKit Class that will autoresize itself and any super views based on their autoresizingMask, as subview of NDStrechView are hidden and made visible.
