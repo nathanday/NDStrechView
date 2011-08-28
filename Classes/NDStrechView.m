@@ -8,20 +8,39 @@
 
 #import "NDStrechView.h"
 
+static inline CGFloat CGDiff( CGFloat a, CGFloat b ) { return a > b ? (a -  b) : (b - a); }
+
 @interface NDStrechView ()
 {
+	NSMutableData		* marginsForViewsData;
 }
+- (NSUInteger)insertIndexForSubview:(UIView *)veiw;
+- (NSUInteger)indexForSubview:(UIView *)veiw;
+- (CGFloat)heightAfterUpdateViewPosition;
+- (UIView *)previousVisibleViewForViewAt:(NSUInteger)index;
 
-- (NSUInteger)indexForView:(UIView *)view;
-- (NSUInteger)indexForFrame:(CGRect)rect;
+@property(readonly)				NSMutableData	* marginsForViewsData;
+@property(readonly)				CGFloat			* marginsForViews;
 
 @end
 
 @implementation NDStrechView
 
-@synthesize			resizeSuperViewaSepth;
+@synthesize			resizeSuperViewDepth;
 
 #pragma mark - manually implemented propeties
+
+- (NSMutableData *)marginsForViewsData
+{
+	NSUInteger		theBytesCount = (self.subviews.count + 1) * sizeof(CGFloat);
+	if( marginsForViewsData == nil )
+		marginsForViewsData = [[NSMutableData alloc] initWithLength:theBytesCount];
+	else if (marginsForViewsData.length < theBytesCount)
+		marginsForViewsData.length = theBytesCount;
+	return marginsForViewsData;	
+}
+
+- (CGFloat*)marginsForViews { return (CGFloat*)self.marginsForViewsData.mutableBytes; }
 
 - (NSSet *)hiddenViews
 {
@@ -59,7 +78,7 @@
 	return true;
 }
 
-- (void)isAllViewsVisible:(BOOL)aFlag
+- (void)setAllViewsVisible:(BOOL)aFlag
 {
 	
 }
@@ -90,30 +109,20 @@
 
 - (void)setHidden:(BOOL)aFlag view:(UIView *)aView
 {
-	
+	NSParameterAssert( aView.superview == self );
+	CGRect			theBounds = self.bounds;
+	CGRect			theFrame = self.frame;
+
+	aView.hidden = aFlag;
+	theBounds.size.height = [self heightAfterUpdateViewPosition];
+	theFrame.size = [self convertRect:theBounds toView:self.superview].size;
+	self.frame = theFrame;
 }
 
-- (BOOL)isViewHidden:(UIView *)aView
-{
-	
-}
-
-- (void)setHidden:(BOOL)aFlag index:(NSUInteger)anIndex
-{
-	
-}
-
-- (BOOL)isViewIndexHidden:(NSUInteger)anIndex
-{
-	
-}
+- (BOOL)isViewHidden:(UIView *)aView { return aView.superview == self && aView.hidden; }
 
 - (void)setHidden:(BOOL)aFlag views:(UIView *)firstView, ...
 {
-	
-}
-
-- (void)setHidden:(BOOL)aFlag indexes:(NSUInteger *)anIndexes count:(NSUInteger)count{
 	
 }
 
@@ -122,69 +131,158 @@
 	
 }
 
-- (void)enumerateObjectsUsingBlock:(BOOL (^)(UIView * aView, BOOL hidden, BOOL *stop))setViewHidden
+- (void)enumerateObjectsUsingBlock:(BOOL (^)(UIView * aView, NSUInteger index, BOOL *stop))setViewHidden
 {
+	BOOL		theStop = NO;
+	for( NSUInteger i = 0, c = self.subviews.count; i < c && theStop == NO; i++ )
+	{
+		UIView		* theView = [self.subviews objectAtIndex:i];
 
+		BOOL		theHide = setViewHidden( theView, i, &theStop);
+		if( !theStop && theView.isHidden != theHide )
+			[self setHidden:theHide view:theView];
+
+	}
 }
 
-- (NSUInteger)indexOfView:(UIView *)aView { return [self.subviews indexOfObjectIdenticalTo:aView]; }
+#pragma mark - UIView methods
 
-#pragma mark - UIViw methods
-
-- (void)addSubview:(UIView *)aView { [self insertSubview:aView atIndex:[self indexOfView:aView]; }
-
-- (void)bringSubviewToFront:(UIView *)aView { [self exchangeSubviewAtIndex:[self indexOfView:aView] withSubviewAtIndex:0]; }
-
-- (void)sendSubviewToBack:(UIView *)aView { [self exchangeSubviewAtIndex:[self indexOfView:aView] withSubviewAtIndex:self.subviews.count-1]; }
-									  
-- (CGSize)sizeThatFits:(CGSize)aSize
-{
-	
-}
-
-- (void)willRemoveSubview:(UIView *)aSubview
-{
-}
-
-- (void)insertSubview:(UIView *)view atIndex:(NSInteger)index
+- (void)insertSubview:(UIView *)aView atIndex:(NSInteger)index
 {
 	
 }
 
-- (void)insertSubview:(UIView *)aView aboveSubview:(UIView *)siblingSubview { [self insertSubview:aView atIndex:[self indexOfView:siblingSubview]]; }
-- (void)insertSubview:(UIView *)view belowSubview:(UIView *)siblingSubview { [self insertSubview:aView atIndex:[self indexOfView:siblingSubview]+1]; 
+- (void)exchangeSubviewAtIndex:(NSInteger)anIndex1 withSubviewAtIndex:(NSInteger)anIndex2
+{
+	
+}
 
-- (void)exchangeSubviewAtIndex:(NSInteger)index1 withSubviewAtIndex:(NSInteger)index2
+- (void)addSubview:(UIView *)aView
+{
+	NSUInteger		theIndex = [self insertIndexForSubview:aView],
+					theCount = self.subviews.count;
+	[super insertSubview:aView atIndex:theIndex];
+	
+	if( theIndex == 0 )
+		self.marginsForViews[0] = CGRectGetMinY(aView.frame) - CGRectGetMinY(self.bounds);
+	else
+		self.marginsForViews[theIndex] = CGRectGetMinY(aView.frame) - CGRectGetMaxY([[self.subviews objectAtIndex:theIndex-1] frame]);
+
+
+	if( theIndex == theCount )
+		self.marginsForViews[theIndex+1] = CGRectGetMaxY(self.bounds) - CGRectGetMaxY(aView.frame);
+	else
+		self.marginsForViews[theIndex+1] = CGRectGetMinY([[self.subviews objectAtIndex:theIndex+1] frame]) - CGRectGetMaxY(aView.frame);
+}
+
+- (void)insertSubview:(UIView *)aView belowSubview:(UIView *)siblingSubview
+{
+	
+}
+
+- (void)insertSubview:(UIView *)aView aboveSubview:(UIView *)siblingSubview
+{
+	
+}
+
+- (void)bringSubviewToFront:(UIView *)aView
+{
+	
+}
+
+- (void)sendSubviewToBack:(UIView *)aView
 {
 	
 }
 
 - (void)didMoveToSuperview
 {
-	
+	[super didMoveToSuperview];
 }
 
 #pragma mark - private methods
 
-- (NSUInteger)indexForView:(UIView *)aView { return [self indexForFrame:aView.frame]; }
-- (NSUInteger)indexForFrame:(CGRect)aRect
+- (NSUInteger)insertIndexForSubview:(UIView *)aSubjectView
 {
-	NSArray		* theSubViews = self.subviews;
-	CGFloat		theInMidY = CGRectGetMaxY(aRect);
-	NSUInteger	l = 0,
-				u = theSubViews.count - 1;
+	NSArray			* theSubViews = self.subviews;
+	CGFloat			theSubjectMid = CGRectGetMidY(aSubjectView.frame);
+	NSUInteger		theResult = NSNotFound;
+	NSUInteger		theCount = theSubViews.count;
 
-	while( l < u )
+	/*
+		most of the time it will be just and append to the end
+	 */
+	if( theCount == 0 || CGRectGetMidY([theSubViews.lastObject frame]) < theSubjectMid )
+		theResult = self.subviews.count;
+		
+	for( NSUInteger theLower = 0, theUpper = theCount; theResult == NSNotFound; theResult = (theUpper+theLower)>>1 )
 	{
-		NSUInteger	m = (l + u) >> 1;
-		CGFloat		theMidY = CGRectGetMaxY([[theSubViews objectAtIndex:m] frame]);
-		if( theInMidY > theMidY )
-			l = m;
-		else if( theInMidY < theMidY )
-			u = m;
+		if( theLower + 1 >= theUpper )		// down to between two possibilities
+		{
+			CGFloat			theMid = CGRectGetMidY([[theSubViews objectAtIndex:theLower] frame]);
+			if( theSubjectMid > theMid )
+				theResult = theUpper;
+			else
+				theResult = theLower;
+		}
+		else
+		{
+			CGFloat			theMid = CGRectGetMidY([[theSubViews objectAtIndex:theResult] frame]);
+			if( theSubjectMid < theMid )
+				theUpper = theMid;
+			else
+				theLower = theMid;
+		}
 	}
-	return l;
+	return theResult;
 }
 
+- (NSUInteger)indexForSubview:(UIView *)aView
+{
+	NSUInteger		theIndex = 0;
+	for( UIView * theView in self.subviews )
+	{
+		if( theView == aView )
+			return theIndex;
+		theIndex++;
+	}
+	return NSNotFound;
+}
+
+- (CGFloat)heightAfterUpdateViewPosition
+{
+	__block CGFloat		thePreviousBottom = CGRectGetMinY(self.bounds);
+	__block NSUInteger	theLastIndex = 0;
+	[self.subviews enumerateObjectsUsingBlock:^(id anObject, NSUInteger anIndex, BOOL * aStop )
+	{
+		UIView					* theView = anObject;
+		UIViewAutoresizing		theViewAutoresizing = (theView.autoresizingMask&(UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleRightMargin));
+		if( !theView.isHidden )
+		{
+			CGFloat		theTopMarginForView = self.marginsForViews[anIndex];
+			CGRect		theFrame = theView.frame;
+			theFrame.origin.y = thePreviousBottom + theTopMarginForView;
+			theView.frame = theFrame;
+			thePreviousBottom = CGRectGetMaxY(theFrame);
+			theLastIndex = anIndex;
+		}
+		
+		theView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin|theViewAutoresizing;
+	}];
+	return thePreviousBottom + self.marginsForViews[theLastIndex+1];
+}
+
+- (UIView *)previousVisibleViewForViewAt:(NSUInteger)anIndex
+{
+	UIView			* theResult = nil;
+	NSArray			* theSubviews = self.subviews;
+	for( NSUInteger i = anIndex; i > 0 && theResult == nil; i-- )
+	{
+		UIView		* theView = [theSubviews objectAtIndex:i-1];
+		if( !theView.isHidden )
+			theResult = theView;
+	}
+	return theResult;
+}
 
 @end
