@@ -140,6 +140,7 @@ static inline CGFloat CGDiff( CGFloat a, CGFloat b ) { return a > b ? (a -  b) :
 	UIView			* theView = nil;
     va_start(theVAList, aFirstView);
 
+    aFirstView.hidden = aFlag;
 	while( (theView = va_arg(theVAList, UIView*)) != nil )
 	{
 		NSParameterAssert( theView.superview == self );
