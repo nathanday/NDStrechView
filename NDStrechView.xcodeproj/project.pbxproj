@@ -141,6 +141,7 @@
 		D8888BE31407ABD200DDDFC4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "Nathan Day";
 			};
 			buildConfigurationList = D8888BE61407ABD200DDDFC4 /* Build configuration list for PBXProject "NDStrechView" */;

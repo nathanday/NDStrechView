@@ -246,7 +246,7 @@ static inline CGFloat CGDiff( CGFloat a, CGFloat b ) { return a > b ? (a -  b) :
 	if( theCount == 0 || CGRectGetMidY([theSubViews.lastObject frame]) < theSubjectMid )
 		theResult = self.subviews.count;
 		
-	for( NSUInteger theLower = 0, theUpper = theCount; theResult == NSNotFound; theResult = (theUpper+theLower)>>1 )
+	for( NSUInteger theLower = 0, theUpper = theCount, theMid = (theUpper+theLower)>>1; theResult == NSNotFound; theMid = (theUpper+theLower)>>1 )
 	{
 		if( theLower + 1 >= theUpper )		// down to between two possibilities
 		{
@@ -258,8 +258,8 @@ static inline CGFloat CGDiff( CGFloat a, CGFloat b ) { return a > b ? (a -  b) :
 		}
 		else
 		{
-			CGFloat			theMid = CGRectGetMidY([[theSubViews objectAtIndex:theResult] frame]);
-			if( theSubjectMid < theMid )
+			CGFloat			theFrameMid = CGRectGetMidY([[theSubViews objectAtIndex:theMid] frame]);
+			if( theSubjectMid < theFrameMid )
 				theUpper = theMid;
 			else
 				theLower = theMid;
